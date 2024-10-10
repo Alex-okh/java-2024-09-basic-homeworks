@@ -7,11 +7,12 @@ public class Solution {
 
 
     }
-
+// Задача 1
     public static void greetings() {
         System.out.println("Hello\nWorld\nfrom\nJava");
     }
 
+// Задача 2
     public static void checkSign(int a, int b, int c) {
         if (a + b + c >= 0) {
             System.out.println("Сумма положительная");
@@ -20,6 +21,7 @@ public class Solution {
         }
     }
 
+    // Задача 3
     public static void selectColor() {
         int data = 20;
         if (data <= 10) {
@@ -31,6 +33,7 @@ public class Solution {
         }
     }
 
+// Задача 4
     public static void compareNumbers() {
         int a = 10;
         int b = 20;
