@@ -10,13 +10,6 @@ public class Solution {
         compareNumbers();
         addOrSubtractAndPrint(10, 4, true);
 
-        for (int i = 0; i < 1000; i++) {
-            int sum = 0;
-            int rand = getRndInt(-100, 101);
-            sum += rand;
-            System.out.println(sum);
-        }
-
 // (*)
         Scanner sc = new Scanner(System.in);
         System.out.println("""
