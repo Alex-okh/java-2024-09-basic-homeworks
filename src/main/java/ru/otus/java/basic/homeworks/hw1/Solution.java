@@ -10,6 +10,13 @@ public class Solution {
         compareNumbers();
         addOrSubtractAndPrint(10, 4, true);
 
+        for (int i = 0; i < 1000; i++) {
+            int sum = 0;
+            int rand = getRndInt(-100, 101);
+            sum += rand;
+            System.out.println(sum);
+        }
+
 // (*)
         Scanner sc = new Scanner(System.in);
         System.out.println("""
@@ -24,15 +31,15 @@ public class Solution {
 
         switch (choise) {
             case 1 -> greetings();
-            case 2 -> checkSign(getRndInt(-100, 100), getRndInt(-100, 100), getRndInt(-100, 100));
+            case 2 -> checkSign(getRndInt(-100, 101), getRndInt(-100, 101), getRndInt(-100, 101));
             case 3 -> selectColor();
             case 4 -> compareNumbers();
             case 5 -> {
                 boolean inc = false;
-                if (getRndInt(-1, 1) > 0) {
+                if (getRndInt(-100, 101) > 0) {
                     inc = true;
                 }
-                addOrSubtractAndPrint(getRndInt(-100, 100), getRndInt(-100, 100), inc);
+                addOrSubtractAndPrint(getRndInt(-100, 101), getRndInt(-100, 101), inc);
             }
             default -> System.out.println("Нет такого метода");
         }
