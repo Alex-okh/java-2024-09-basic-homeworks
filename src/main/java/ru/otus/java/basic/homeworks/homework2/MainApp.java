@@ -27,13 +27,15 @@ public class MainApp {
         int[] test2 = {2, 2};
         int[] test3 = {1, 1, 1, 1, 1};
         int[] test4 = {6, 5, 4, 3, 2, 1, 0};
-        int[] test5 = {1, 1, 1, 1, 5, 6, 7};
+        int[] test5 = {1, 1, 1, 1, 5, 9, 0};
         int[] test6 = {};
 
         System.out.println("------------Задача 1----------");
         System.out.println(Arrays.toString(sumArrays(test1, test2, test3, test4, test5, test6)));
+        System.out.println("------------Задача 2----------");
+        System.out.println(hasMiddlePoint(test6));
         System.out.println("------------Задача 3----------");
-        System.out.println(isAccending(test6, false ));
+        System.out.println(isAccending(test6, false));
         System.out.println("------------Задача 4----------");
         System.out.println(Arrays.toString(reverseArray(test4)));
 
@@ -79,12 +81,36 @@ public class MainApp {
         return result;
 
     }
+
+    //Задача 2
+
+    public static int partialSum(int[] arr1, int firstIndex, int lastIndex) {
+        int sum = 0;
+        if (firstIndex >= arr1.length || lastIndex >= arr1.length) {
+            return 0;
+        }
+        for (int i = firstIndex; i <= lastIndex; i++) {
+            sum += arr1[i];
+        }
+        return sum;
+    }
+
+    public static boolean hasMiddlePoint(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            if (partialSum(arr, 0, i) == partialSum(arr, i + 1, arr.length - 1)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     //Задача 3
-    public static boolean isAccending (int[] arr1, boolean acending) {
-        for (int i = 0; i < arr1.length-1; i++) {
-           if ((arr1[i] > arr1[i+1] && acending) || (arr1[i] < arr1[i+1] && !acending)) {
-               return false;
-           }
+    public static boolean isAccending(int[] arr1, boolean acending) {
+        for (int i = 0; i < arr1.length - 1; i++) {
+            if ((arr1[i] > arr1[i + 1] && acending) || (arr1[i] < arr1[i + 1] && !acending)) {
+                return false;
+            }
         }
         return true;
     }
