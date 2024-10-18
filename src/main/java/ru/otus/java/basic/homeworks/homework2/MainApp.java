@@ -26,15 +26,21 @@ public class MainApp {
         int[] test1 = {1, 2, 3};
         int[] test2 = {2, 2};
         int[] test3 = {1, 1, 1, 1, 1};
-        int[] test4 = {1, 1, 1, 1, 5, 6, 7};
+        int[] test4 = {6, 5, 4, 3, 2, 1, 0};
         int[] test5 = {1, 1, 1, 1, 5, 6, 7};
         int[] test6 = {};
 
-
+        System.out.println("------------Задача 1----------");
         System.out.println(Arrays.toString(sumArrays(test1, test2, test3, test4, test5, test6)));
+        System.out.println("------------Задача 3----------");
+        System.out.println(isAccending(test6, false ));
+        System.out.println("------------Задача 4----------");
+        System.out.println(Arrays.toString(reverseArray(test4)));
+
 
     }
-// Задача 1
+
+    // Задача 1
     public static int[] sumTwoArrays(int[] arr1, int[] arr2) {
         int[] result = new int[Math.max(arr1.length, arr2.length)];
 
@@ -73,8 +79,25 @@ public class MainApp {
         return result;
 
     }
+    //Задача 3
+    public static boolean isAccending (int[] arr1, boolean acending) {
+        for (int i = 0; i < arr1.length-1; i++) {
+           if ((arr1[i] > arr1[i+1] && acending) || (arr1[i] < arr1[i+1] && !acending)) {
+               return false;
+           }
+        }
+        return true;
+    }
 
- //Задача 2
+    //Задача 4
+
+    public static int[] reverseArray(int[] arr) {
+        int[] result = new int[arr.length];
+        for (int i = arr.length - 1; i >= 0; i--) {
+            result[i] = arr[arr.length - 1 - i];
+        }
+        return result;
+    }
 
 
 }
