@@ -27,15 +27,18 @@ public class MainApp {
         int[] test2 = {2, 2};
         int[] test3 = {1, 1, 1, 1, 1};
         int[] test4 = {6, 5, 4, 3, 2, 1, 0};
-        int[] test5 = {1, 1, 1, 1, 5, 9, 0};
+        int[] test5 = {0, 1, 1, 1, 5, 1, 9};
         int[] test6 = {};
 
         System.out.println("------------Задача 1----------");
         System.out.println(Arrays.toString(sumArrays(test1, test2, test3, test4, test5, test6)));
+
         System.out.println("------------Задача 2----------");
-        System.out.println(hasMiddlePoint(test6));
+        System.out.println(hasMiddlePoint(test2));
+
         System.out.println("------------Задача 3----------");
-        System.out.println(isAccending(test6, false));
+        System.out.println(isAccending(test4, false));
+
         System.out.println("------------Задача 4----------");
         System.out.println(Arrays.toString(reverseArray(test4)));
 
@@ -43,24 +46,24 @@ public class MainApp {
     }
 
     // Задача 1
+
+    // Суммирует соответствующие элементы двух целочисленных массивов, возвращая массив большей длины.
     public static int[] sumTwoArrays(int[] arr1, int[] arr2) {
-        int[] result = new int[Math.max(arr1.length, arr2.length)];
+        int[] result;
+
+        if (arr1.length > arr2.length) {
+            result = Arrays.copyOf(arr1, arr1.length);
+        } else {
+            result = Arrays.copyOf(arr2, arr2.length);
+        }
 
         for (int i = 0; i < Math.min(arr1.length, arr2.length); i++) {
             result[i] = arr1[i] + arr2[i];
         }
-
-        for (int i = Math.min(arr1.length, arr2.length); i < Math.max(arr1.length, arr2.length); i++) {
-            if (i < arr1.length) {
-                result[i] = arr1[i];
-            } else {
-                result[i] = arr2[i];
-            }
-        }
-
         return result;
     }
 
+    // Суммирует последовательно любое количество целочисленных массивов поэлементно, возвращает массив максимальной длины.
     public static int[] sumArrays(int[]... arrays) {
         int arraysCount = arrays.length;
         int maxArrayLength = 0;
@@ -84,17 +87,24 @@ public class MainApp {
 
     //Задача 2
 
+    // Возвращает сумму элементов части массива, заданной 2 индексами, оба включительно.
+    // Если первый индекс больше последнего, то сумма = 0.
     public static int partialSum(int[] arr1, int firstIndex, int lastIndex) {
         int sum = 0;
-        if (firstIndex >= arr1.length || lastIndex >= arr1.length) {
+        if (firstIndex >= arr1.length || firstIndex > lastIndex) {
             return 0;
         }
+        if (lastIndex >= arr1.length) {
+            lastIndex = arr1.length - 1;
+        }
+
         for (int i = firstIndex; i <= lastIndex; i++) {
             sum += arr1[i];
         }
         return sum;
     }
 
+    // Проверяет есть ли точка между элементами массива, для которой суммы элементов справа и слева равны.
     public static boolean hasMiddlePoint(int[] arr) {
         for (int i = 0; i < arr.length; i++) {
             if (partialSum(arr, 0, i) == partialSum(arr, i + 1, arr.length - 1)) {
@@ -106,6 +116,9 @@ public class MainApp {
 
 
     //Задача 3
+
+    // Проверяет, что все элементы массива расположены по возрастанию (если параметр acending = true)
+    // или по убыванию (если параметр acending = false)
     public static boolean isAccending(int[] arr1, boolean acending) {
         for (int i = 0; i < arr1.length - 1; i++) {
             if ((arr1[i] > arr1[i + 1] && acending) || (arr1[i] < arr1[i + 1] && !acending)) {
@@ -117,6 +130,7 @@ public class MainApp {
 
     //Задача 4
 
+    // Возвращает массив с обратным расположением элементов
     public static int[] reverseArray(int[] arr) {
         int[] result = new int[arr.length];
         for (int i = arr.length - 1; i >= 0; i--) {
