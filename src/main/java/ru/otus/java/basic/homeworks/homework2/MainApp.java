@@ -34,7 +34,7 @@ public class MainApp {
         System.out.println(Arrays.toString(sumArrays(test1, test2, test3, test4, test5, test6)));
 
         System.out.println("------------Задача 2----------");
-        System.out.println(hasMiddlePoint(test2));
+        System.out.println(hasMiddlePoint(test6));
 
         System.out.println("------------Задача 3----------");
         System.out.println(isAccending(test4, false));
@@ -106,8 +106,14 @@ public class MainApp {
 
     // Проверяет есть ли точка между элементами массива, для которой суммы элементов справа и слева равны.
     public static boolean hasMiddlePoint(int[] arr) {
+        int sumLeft = 0;
+        int sumRight = partialSum(arr, 0, arr.length - 1);
+        if (sumRight % 2 != 0) { return false;}
+
         for (int i = 0; i < arr.length; i++) {
-            if (partialSum(arr, 0, i) == partialSum(arr, i + 1, arr.length - 1)) {
+            sumLeft += arr[i];
+            sumRight -= arr[i];
+            if (sumLeft == sumRight) {
                 return true;
             }
         }
