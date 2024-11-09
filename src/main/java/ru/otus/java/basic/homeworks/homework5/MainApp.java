@@ -11,10 +11,8 @@ package ru.otus.java.basic.homeworks.homework5;
 //Реализуйте методы run(int distance) и swim(int distance), которые должны возвращать время, затраченное на указанное действие, и “понижать выносливость” животного. Если выносливости не хватает, то возвращаем время -1 и указываем что у животного появилось состояние усталости. При выполнении действий пишем сообщения в консоль.
 //Добавляем метод info(), который выводит в консоль состояние животного.
 
-import ru.otus.java.basic.homeworks.homework5.animals.Animal;
-import ru.otus.java.basic.homeworks.homework5.animals.Cat;
-import ru.otus.java.basic.homeworks.homework5.animals.Dog;
-import ru.otus.java.basic.homeworks.homework5.animals.Horse;
+import ru.otus.java.basic.homeworks.homework5.animals.*;
+
 
 public class MainApp {
 
