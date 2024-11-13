@@ -14,7 +14,7 @@ public class Plate {
     }
 
     public void addFood(int foodAmount) {
-        currentFood += Math.max(foodAmount, maxFood);
+        currentFood = Math.max(currentFood + foodAmount, maxFood);
 
     }
 
