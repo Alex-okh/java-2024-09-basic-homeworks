@@ -20,6 +20,6 @@ public class Emploee {
     @Override
     public String toString() {
         return "Сотрудник " +
-             name + ", его возраст: " + age;
+            name + ", его возраст: " + age;
     }
 }
