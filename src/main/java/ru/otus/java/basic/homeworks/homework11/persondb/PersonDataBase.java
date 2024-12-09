@@ -1,13 +1,23 @@
 package ru.otus.java.basic.homeworks.homework11.persondb;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class PersonDataBase {
     Map<Long, Person> persons;
+    Set <Position> management;
+
 
     public PersonDataBase() {
         persons = new HashMap<>();
+        management = new HashSet<>();
+
+        management.add(Position.MANAGER);
+        management.add(Position.DIRECTOR);
+        management.add(Position.BRANCH_DIRECTOR);
+        management.add(Position.SENIOR_MANAGER);
     }
 
     public Person findById(long id) {
@@ -19,19 +29,13 @@ public class PersonDataBase {
 
     }
 
-    public static boolean isManager(Person person) {
-        Position position = person.getPosition();
-
-        return (
-                position == Position.MANAGER ||
-                position == Position.DIRECTOR ||
-                position == Position.BRANCH_DIRECTOR ||
-                position == Position.SENIOR_MANAGER);
+    public boolean isManager(Person person) {
+        return management.contains(person.getPosition());
     }
 
     public boolean isEmployee(long id) {
-        Person person = findById(id);
-        return !isManager(person);
+        return !management.contains(findById(id).getPosition());
+
     }
 
 

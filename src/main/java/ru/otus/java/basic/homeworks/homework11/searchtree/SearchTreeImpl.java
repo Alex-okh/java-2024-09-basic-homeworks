@@ -2,7 +2,7 @@ package ru.otus.java.basic.homeworks.homework11.searchtree;
 
 import java.util.List;
 
-public class SearchTreeImpl implements SearchTree <Comparable>{
+public class SearchTreeImpl  {
     private Node root;
 
     public SearchTreeImpl() {
@@ -10,7 +10,16 @@ public class SearchTreeImpl implements SearchTree <Comparable>{
     }
 
     public void insertAll(List<Comparable> list) {
-        list.forEach(this::insert);
+        if (list.isEmpty()) return;
+        if (list.size() == 1) {
+            insert(list.get(0));
+            return;
+        }
+        int middle = list.size() / 2;
+        insert(list.get(middle));
+        insertAll(list.subList(0, middle));
+        insertAll(list.subList(middle + 1, list.size()));
+
 
     }
 
@@ -64,10 +73,21 @@ public class SearchTreeImpl implements SearchTree <Comparable>{
 
     }
 
-    @Override
+
     public List<Comparable> getSortedList() {
 
 
         return null;
+    }
+
+    public void printTree() {
+        printTree(root);
+    }
+
+    private void printTree(Node node) {
+        if (node == null) { System.out.println(); return;}
+        System.out.print(node.getValue() + "-->");
+        printTree(node.getLeft());
+        printTree(node.getRight());
     }
 }

@@ -32,6 +32,7 @@ public class MainApp {
         int[] testarray = SortUtils.generateRandomArray(15000, -1000, 1000);
 
         int[] testTreeArray = SortUtils.generateRandomArray(50, 0, 50);
+        SortUtils.quickSort(testTreeArray, 0, testTreeArray.length - 1);
         List<Comparable> testTree = new ArrayList<>(testTreeArray.length);
         for (int j : testTreeArray) {
             testTree.add(j);
@@ -73,6 +74,6 @@ public class MainApp {
         System.out.println("-------------------------------------------------------------");
         SearchTreeImpl tree2 = new SearchTreeImpl();
         tree2.insertAll(testTree);
-        System.out.println(tree2.find(30));
+        tree2.printTree();
     }
 }
