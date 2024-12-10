@@ -1,6 +1,6 @@
 package ru.otus.java.basic.homeworks.homework11.searchtree;
 
-public class Node {
+public class Node implements Comparable<Node> {
     private Comparable value;
     private Node left;
     private Node right;
@@ -36,5 +36,10 @@ public class Node {
             ", left=" + left +
             ", right=" + right +
             '}';
+    }
+
+    @Override
+    public int compareTo(Node o) {
+        return this.value.compareTo(o.getValue());
     }
 }

@@ -1,15 +1,16 @@
 package ru.otus.java.basic.homeworks.homework11.searchtree;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class SearchTreeImpl  {
+public class SearchTreeImpl implements SearchTree {
     private Node root;
 
     public SearchTreeImpl() {
         root = null;
     }
 
-    public void insertAll(List<Comparable> list) {
+    public <T extends Comparable<T>> void insertAll(List<T> list) {
         if (list.isEmpty()) return;
         if (list.size() == 1) {
             insert(list.get(0));
@@ -20,7 +21,6 @@ public class SearchTreeImpl  {
         insertAll(list.subList(0, middle));
         insertAll(list.subList(middle + 1, list.size()));
 
-
     }
 
     public void insert(Comparable item) {
@@ -28,66 +28,66 @@ public class SearchTreeImpl  {
         newnode.setValue(item);
         if (root == null) {
             root = newnode;
-        } else {
-            Node currentNode = root;
-            Node parentNode;
-            while (true) {
-                parentNode = currentNode;
-                if (item.compareTo(currentNode.getValue()) == 0) {
+            return;
+        }
+
+        Node currentNode = root;
+        Node parentNode;
+
+        while (true) {
+            parentNode = currentNode;
+            if (newnode.compareTo(currentNode) == 0) {
+                return;
+            }
+            if (newnode.compareTo(currentNode) < 0) {
+                currentNode = currentNode.getLeft();
+                if (currentNode == null) {
+                    parentNode.setLeft(newnode);
                     return;
                 }
-                if (item.compareTo(currentNode.getValue()) < 0) {
-                    currentNode = currentNode.getLeft();
-                    if (currentNode == null) {
-                        parentNode.setLeft(newnode);
-                        return;
-                    }
-                } else {
-                    currentNode = currentNode.getRight();
-                    if (currentNode == null) {
-                        parentNode.setRight(newnode);
-                        return;
-                    }
+            } else {
+                currentNode = currentNode.getRight();
+                if (currentNode == null) {
+                    parentNode.setRight(newnode);
+                    return;
                 }
             }
-
-
         }
+
+
     }
 
-    public Comparable find(Comparable item) {
-        return find(item, root);
+    @Override
+    public Object find(Object item) {
+        return find((Comparable) item, root);
     }
 
     private Comparable find(Comparable item, Node node) {
-        Node currentNode = node;
         if (node == null) return null;
-        if (currentNode.getValue().equals(item)) {
+        if (node.getValue().equals(item)) {
             return item;
         }
-        if (currentNode.getValue().compareTo(item) < 0) {
-            return find(item, currentNode.getRight());
+        if (node.getValue().compareTo(item) < 0) {
+            return find(item, node.getRight());
         } else {
-            return find(item, currentNode.getLeft());
+            return find(item, node.getLeft());
         }
 
     }
 
 
-    public List<Comparable> getSortedList() {
-
-
-        return null;
+    public List<Object> getSortedList() {
+        return getSortedList(root);
     }
 
-    public void printTree() {
-        printTree(root);
+    private List<Object> getSortedList(Node node) {
+        if (node == null) return new ArrayList<>();
+        List<Object> result = getSortedList(node.getLeft());
+        result.add(node.getValue());
+        result.addAll(getSortedList(node.getRight()));
+        return result;
+
+
     }
 
-    private void printTree(Node node) {
-        if (node == null) { System.out.println(); return;}
-        System.out.print(node.getValue() + "-->");
-        printTree(node.getLeft());
-        printTree(node.getRight());
-    }
 }
