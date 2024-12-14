@@ -4,10 +4,10 @@ public abstract class Timer {
     static long timestamp;
 
     public static void stamp() {
-        timestamp = System.currentTimeMillis();
+        timestamp = System.nanoTime();
     }
 
     public static long stop() {
-        return System.currentTimeMillis() - timestamp;
+        return (System.nanoTime() - timestamp)/1000000;
     }
 }

@@ -11,7 +11,7 @@ public class MainApp {
             System.out.println("Заполняем массив в 1 поток..");
             Timer.stamp();
             fillArray(data, 0, data.length);
-            System.out.println("Заняло : " + Timer.stop() + " ms");
+            System.out.println("Заняло : " + Timer.stop() + " мс.");
 
             Thread filler1 = new Thread(() ->
                 fillArray(data, 0, data.length / 4));
@@ -20,7 +20,7 @@ public class MainApp {
             Thread filler2 = new Thread(() ->
                 fillArray(data, data.length / 4, data.length / 2));
             Thread filler3 = new Thread(() ->
-                fillArray(data, data.length / 4, data.length / 4 * 3));
+                fillArray(data, data.length / 2, data.length / 4 * 3));
             Thread filler4 = new Thread(() ->
                 fillArray(data, data.length / 4 * 3, data.length));
 
@@ -35,7 +35,7 @@ public class MainApp {
             filler2.join();
             filler3.join();
             filler4.join();
-            System.out.println("Заняло : " + Timer.stop() + " ms");
+            System.out.println("Заняло : " + Timer.stop() + " мс.");
         }
     }
 
