@@ -34,56 +34,41 @@ public class Client {
                 inputStream = new DataInputStream(socket.getInputStream());
                 outputStream = new DataOutputStream(socket.getOutputStream());
                 System.out.println("Connected.");
+                outputStream.writeUTF("Command_HELLO");
+                outputStream.flush();
+                try {
+                    String result = inputStream.readUTF();
+                    System.out.println(result);
+                } catch (EOFException e) {
+                    System.out.println("Connection closed.");
+                }
 
-            } catch (
-                ConnectException e) {
+                String input = "";
+                Scanner sc = new Scanner(System.in);
+                while (!input.equals("exit")) {
+
+                    System.out.print("-->");
+                    input = sc.nextLine();
+                    outputStream.writeUTF(input);
+                    outputStream.flush();
+                    try {
+                        String result = inputStream.readUTF();
+                        System.out.println(result);
+                    } catch (EOFException e) {
+                        System.out.println("Connection closed.");
+                    }
+                }
+
+            } catch (ConnectException e) {
                 System.out.println(e.getMessage());
+                Thread.sleep(timeout);
+                connecRetries++;
                 if (connecRetries > 10) break;
 
-            } catch (
-                IOException e) {
-                throw new RuntimeException(e);
-            }
-            Thread.sleep(timeout);
-            connecRetries++;
-        }
-        if (inputStream == null || outputStream == null) {
-            System.out.println("Could not connect. Exiting...");
-            System.exit(1);
-        }
-        outputStream.writeUTF("Command_HELLO");
-        outputStream.flush();
-        try {
-            String result = inputStream.readUTF();
-            System.out.println(result);
-        } catch (
-            EOFException e) {
-            System.out.println("Connection closed.");
-        }
-
-        String input = "";
-        Scanner sc = new Scanner(System.in);
-        while (!input.equals("exit")) {
-
-            System.out.print("-->");
-            input = sc.nextLine();
-            outputStream.writeUTF(input);
-            outputStream.flush();
-            try {
-                String result = inputStream.readUTF();
-                System.out.println(result);
-            } catch (
-                EOFException e) {
-                System.out.println("Connection closed.");
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
             }
         }
-        System.out.println("Client is shutting down...");
-        sc.close();
-        inputStream.close();
-        outputStream.close();
-        socket.close();
-
-
     }
 }
 
