@@ -23,25 +23,20 @@ public class Client {
         Socket socket = null;
 
         System.out.println("Client is starting...");
-
-
         while (socket == null) {
             System.out.println("Connecting to server...");
 
             try {
                 socket = new Socket("localhost", 8080);
-
                 inputStream = new DataInputStream(socket.getInputStream());
                 outputStream = new DataOutputStream(socket.getOutputStream());
                 System.out.println("Connected.");
 
-            } catch (
-                ConnectException e) {
+            } catch (ConnectException e) {
                 System.out.println(e.getMessage());
                 if (connecRetries > 10) break;
 
-            } catch (
-                IOException e) {
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
             Thread.sleep(timeout);
@@ -56,25 +51,25 @@ public class Client {
         try {
             String result = inputStream.readUTF();
             System.out.println(result);
-        } catch (
-            EOFException e) {
+        } catch (EOFException e) {
             System.out.println("Connection closed.");
         }
 
         String input = "";
+        boolean connectionClosed = false;
         Scanner sc = new Scanner(System.in);
-        while (!input.equals("exit")) {
+        while (!input.equals("exit") && !connectionClosed) {
 
             System.out.print("-->");
             input = sc.nextLine();
-            outputStream.writeUTF(input);
-            outputStream.flush();
             try {
+                outputStream.writeUTF(input);
+                outputStream.flush();
                 String result = inputStream.readUTF();
                 System.out.println(result);
-            } catch (
-                EOFException e) {
-                System.out.println("Connection closed.");
+            } catch (IOException e) {
+                System.out.println("Connection interrupted.");
+                connectionClosed = true;
             }
         }
         System.out.println("Client is shutting down...");

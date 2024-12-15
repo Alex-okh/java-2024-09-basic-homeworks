@@ -7,7 +7,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.EmptyStackException;
+
 
 
 public class Server {
@@ -29,28 +29,28 @@ public class Server {
                 clientConnected = true;
                 System.out.println("Client connected. Port : " + client.getPort());
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println("Exception:  " + e.getMessage());
             }
             while (clientConnected) {
                 DataInputStream inputstream = null;
                 try {
                     inputstream = new DataInputStream(client.getInputStream());
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    System.out.println("Exception:  " + e.getMessage());
                 }
                 DataOutputStream outputstream = null;
                 try {
                     outputstream = new DataOutputStream(client.getOutputStream());
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    System.out.println("Exception:  " + e.getMessage());
                 }
 
                 String output = "";
-                String input = null;
+                String input = "";
                 try {
                     input = inputstream.readUTF();
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    System.out.println("Exception:  " + e.getMessage());
                 }
                 System.out.println("Server received: " + input);
                 switch (input) {
@@ -66,17 +66,17 @@ public class Server {
                         System.out.println("Connection closed.");
                     }
                     case "Command_HELLO" -> output = """
-                        Welcome to calculator server v.0.1. Please send a string with an equation to calculate or "exit" to exit.
-                        Only + - * / operations supported. Brackets should have an operator * if needed.
+                        ---------------------------------------------------------------------------------------------------------
+                        Welcome to calculator server v.0.9. Please send a string with an equation to calculate or "exit" to exit.
+                        + - * / ^ operations are supported. Brackets are supported. Please use . or , as decimal separator.
+                        ---------------------------------------------------------------------------------------------------------
                         """;
                     case "Command_DIE" -> System.exit(0);
                     default -> {
                         try {
                             output = Calculator.calculate(input);
-                        } catch (ArithmeticException e) {
-                            output = e.getMessage();
-                        } catch (EmptyStackException e) {
-                            output = "not supported yet.";
+                        } catch (Exception e) {
+                            output = "Could not calculate due to internal error. Sorry.";
                         }
                     }
                 }
@@ -85,7 +85,8 @@ public class Server {
                     outputstream.flush();
                     System.out.println("Server sent: " + output);
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    System.out.println(e.getMessage());
+                    clientConnected = false;
                 }
             }
 
@@ -96,32 +97,3 @@ public class Server {
 }
 
 
-//    public static String calculate(String input) {
-//        String[] operands = input.split("[-+*/]");
-//        String operator = input.replace("[\d]", "");
-//        try {
-//            switch (operator) {
-//                case "+" -> {
-//                    return "Result: " + (Double.parseDouble(operands[0]) + Double.parseDouble(operands[1]));
-//                }
-//                case "-" -> {
-//                    return "Result: " + (Double.parseDouble(operands[0]) - Double.parseDouble(operands[1]));
-//                }
-//                case "*" -> {
-//                    return "Result: " + (Double.parseDouble(operands[0]) * Double.parseDouble(operands[1]));
-//                }
-//                case "/" -> {
-//                    return "Result: " + (Double.parseDouble(operands[0]) / Double.parseDouble(operands[1]));
-//                }
-//                default -> {
-//                    return "Unknown operator: " + operator;}
-//            }
-//        } catch (NumberFormatException e) {
-//            return e.getMessage();
-//        } catch (ArithmeticException e) {
-//            return e.getMessage();
-//        }
-//    }
-//
-//
-//}

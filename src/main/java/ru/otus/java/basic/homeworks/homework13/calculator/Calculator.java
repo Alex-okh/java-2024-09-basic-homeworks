@@ -18,7 +18,7 @@ public class Calculator {
         String out = in.replace(" ", "").replace(",", ".");
         for (int i = 0; i < out.length() - 1; i++) {
             if (Character.isDigit(in.charAt(i)) && in.charAt(i + 1) == '(') {
-                out = out.substring(0, i) + "*" + out.substring(i);
+                out = out.substring(0, i+1) + "*" + out.substring(i+1);
             }
         }
         return out;
