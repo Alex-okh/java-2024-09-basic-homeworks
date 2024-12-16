@@ -1,19 +1,14 @@
 package ru.otus.java.basic.homeworks.homework13;
 
 import ru.otus.java.basic.homeworks.homework13.calculator.Calculator;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 
-
 public class Server {
     public static void main(String[] args) {
         boolean clientConnected = false;
-
         ServerSocket socket = null;
         try {
             socket = new ServerSocket(8080);
@@ -22,42 +17,38 @@ public class Server {
             throw new RuntimeException(e);
         }
         System.out.println("Server started.");
-        Socket client = null;
+        Socket clientSocket = null;
         while (true) {
             try {
-                client = socket.accept();
+                clientSocket = socket.accept();
                 clientConnected = true;
-                System.out.println("Client connected. Port : " + client.getPort());
+                System.out.println("Client connected. Port : " + clientSocket.getPort());
             } catch (IOException e) {
                 System.out.println("Exception:  " + e.getMessage());
             }
             while (clientConnected) {
-                DataInputStream inputstream = null;
+                ClientHelper client = null;
                 try {
-                    inputstream = new DataInputStream(client.getInputStream());
+                    client = new ClientHelper(clientSocket);
                 } catch (IOException e) {
-                    System.out.println("Exception:  " + e.getMessage());
-                }
-                DataOutputStream outputstream = null;
-                try {
-                    outputstream = new DataOutputStream(client.getOutputStream());
-                } catch (IOException e) {
-                    System.out.println("Exception:  " + e.getMessage());
+                    System.out.println(e.getMessage());
+
                 }
 
                 String output = "";
                 String input = "";
                 try {
-                    input = inputstream.readUTF();
+                    input = client.recieveonly();
                 } catch (IOException e) {
                     System.out.println("Exception:  " + e.getMessage());
+                } catch (NullPointerException e) {
+                    System.out.println("Exception:  " + e.getMessage());
+                    clientConnected = false;
                 }
                 System.out.println("Server received: " + input);
                 switch (input) {
                     case "exit" -> {
                         try {
-                            inputstream.close();
-                            outputstream.close();
                             client.close();
                             clientConnected = false;
                         } catch (IOException e) {
@@ -69,8 +60,7 @@ public class Server {
                         ---------------------------------------------------------------------------------------------------------
                         Welcome to calculator server v.0.9. Please send a string with an equation to calculate or "exit" to exit.
                         + - * / ^ operations are supported. Brackets are supported. Please use . or , as decimal separator.
-                        ---------------------------------------------------------------------------------------------------------
-                        """;
+                        ---------------------------------------------------------------------------------------------------------""";
                     case "Command_DIE" -> System.exit(0);
                     default -> {
                         try {
@@ -81,8 +71,7 @@ public class Server {
                     }
                 }
                 if (clientConnected) try {
-                    outputstream.writeUTF(output);
-                    outputstream.flush();
+                    client.sendonly(output);
                     System.out.println("Server sent: " + output);
                 } catch (IOException e) {
                     System.out.println(e.getMessage());
