@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Box<T extends Fruit> {
-    List<T> contents;
-    int capacity;
+    private final List<T> contents;
+    private final int capacity;
 
     public Box() {
         contents = new ArrayList<>();
@@ -57,6 +57,6 @@ public class Box<T extends Fruit> {
 
     @Override
     public String toString() {
-        return "Box{" + "contents=" + contents + ", capasity=" + capacity + '}';
+        return "Box{" + "contents=" + contents + ", capacity=" + capacity + '}';
     }
 }
