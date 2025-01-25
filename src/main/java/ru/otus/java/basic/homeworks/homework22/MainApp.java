@@ -16,7 +16,7 @@ public class MainApp {
                 return Arrays.copyOfRange(numbers, i + 1, numbers.length);
             }
         }
-        throw new RuntimeException("At least one <1> element expected, none found");
+        throw new RuntimeException("At least one < 1 > element expected, none found");
     }
 
     public static boolean checkOneAndTwoOnly(int[] numbers) {
