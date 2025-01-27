@@ -18,7 +18,7 @@ import static ru.otus.java.basic.homeworks.homework22.MainApp.trimAfterOne;
 
 public class MainAppTest {
 
-  public static Stream<Arguments> goodarraysData() {
+  public static Stream<Arguments> goodArraysData() {
     List<Arguments> data = new ArrayList<>();
     for (int i = 3; i < 20; i++) {
       int[] newArray = new int[i];
@@ -29,7 +29,7 @@ public class MainAppTest {
     return data.stream();
   }
 
-  public static Stream<Arguments> badarraysData() {
+  public static Stream<Arguments> badArraysData() {
     List<Arguments> data = new ArrayList<>();
     for (int i = 3; i < 20; i++) {
       int[] newArray = new int[i];
@@ -93,14 +93,14 @@ public class MainAppTest {
   }
 
   @ParameterizedTest
-  @MethodSource("goodarraysData")
+  @MethodSource("goodArraysData")
   @DisplayName ("1 or 2 only - Random valid arrays")
   public void testCheckOneAndTwoTrue(int[] input) {
     assertTrue(checkOneAndTwoOnly(input));
   }
 
   @ParameterizedTest
-  @MethodSource("badarraysData")
+  @MethodSource("badArraysData")
   @DisplayName ("1 or 2 only - Random invalid arrays")
   public void testCheckOneAndTwoFalse(int[] input) {
     assertFalse(checkOneAndTwoOnly(input));
