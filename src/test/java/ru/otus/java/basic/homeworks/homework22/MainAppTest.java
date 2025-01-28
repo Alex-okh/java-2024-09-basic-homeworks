@@ -41,7 +41,7 @@ public class MainAppTest {
     data.add(Arguments.arguments(false, new int[]{2}));
     data.add(Arguments.arguments(false, new int[]{1, 3, 2}));
     data.add(Arguments.arguments(false, new int[]{}));
-    data.add(Arguments.arguments(false, (Object) null));
+    data.add(Arguments.arguments(false, null));
     return data.stream();
   }
 
