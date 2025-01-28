@@ -21,7 +21,6 @@ public class MainAppTest {
     data.add(Arguments.arguments(new int[]{7, 8}, new int[]{5, 4, 1, 7, 8}));
     data.add(Arguments.arguments(new int[]{7, 8}, new int[]{1, 5, 4, 1, 7, 8}));
     data.add(Arguments.arguments(new int[]{5, 4, 7, 8}, new int[]{1, 5, 4, 7, 8}));
-
     return data.stream();
   }
 
