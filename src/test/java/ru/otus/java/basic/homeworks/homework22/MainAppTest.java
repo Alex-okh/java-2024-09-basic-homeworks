@@ -104,5 +104,6 @@ public class MainAppTest {
   @DisplayName ("1 or 2 only - Random invalid arrays")
   public void testCheckOneAndTwoFalse(int[] input) {
     assertFalse(checkOneAndTwoOnly(input));
+
   }
 }
